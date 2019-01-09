@@ -1,0 +1,78 @@
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-basic-title">Edit Movie</h4>
+  <button type="button" class="close" aria-label="Close" (click)="closeModal()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <form class="text-left" #movieForm="ngForm" [formGroup]="movieForm">
+    <fieldset>
+      <legend class="text-center text-muted"><small>Basic</small></legend>
+      <div class="form-group">
+        <label for="title">Title</label>
+        <input type="text" class="form-control" id="title" #title="ngModel" placeholder="title" name="title" [(ngModel)]="movie.Title">
+        <div *ngIf="title.invalid" class="alert alert-danger">
+          <div *ngIf="movieForm.controls.title.errors.required">
+            Name is required.
+          </div>
+          <div *ngIf="title.errors.minlength">
+            Name must be at least 4 characters long.
+          </div>
+          <div *ngIf="title.errors.forbiddenName">
+            Name cannot be Bob.
+          </div>
+        </div>
+
+      </div>
+
+
+      <div class="form-group">
+        <label for="director">Director</label>
+        <input type="text" class="form-control" id="director" placeholder="Director" name="Director" [(ngModel)]="movie.Director">
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend class="text-center text-muted"><small>Additional</small></legend>
+      <div class="form-group">
+        <label for="genre">Genre</label>
+        <input type="text" class="form-control" id="genre" placeholder="Genre" name="Genre" [(ngModel)]="movie.Genre">
+      </div>
+
+      <div class="form-group">
+        <label for="year">Year</label>
+        <input type="text" class="form-control" id="year" placeholder="Year" name="Year" [(ngModel)]="movie.Year">
+      </div>
+
+      <div class="form-group">
+        <label for="runtime">Runtime</label>
+        <input type="text" class="form-control" id="runtime" placeholder="Runtime" name="Runtime" [(ngModel)]="movie.Runtime">
+      </div>
+    </fieldset>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-dark" (click)="saveMovie()">Save</button>
+  <button type="button" class="btn btn-secondary" (click)="closeModal()">Close</button>
+</div>
+
+<!-- <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Edit Movie</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+         
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div> -->
+<!-- Edit Modal -->
