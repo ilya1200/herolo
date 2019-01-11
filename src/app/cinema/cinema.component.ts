@@ -3,6 +3,8 @@ import { CinemaService } from '../cinema.service';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import { EditModalComponent } from './edit-modal/edit-modal.component';
 import { infMovie } from '../infMovie';
+import { DeleteModalComponent } from './delete-modal/delete-modal.component';
+
 
 @Component({
   selector: 'app-cinema',
@@ -16,17 +18,33 @@ export class CinemaComponent implements OnInit {
     private modalService: NgbModal) { }
 
   ngOnInit() {
-    this.movies = this._CinemaService.getMovies();
+    this._CinemaService.getMovies(data => this.movies=data);
   }
 
-  OpenEditModal(movie) {
+  OpenEditModal(movie, isEditMode) {
     var modal = this.modalService.open(EditModalComponent);
     modal.componentInstance.movie = { ... movie};
-    modal.componentInstance.modalInstance = modal;
+    modal.componentInstance.movies = this.movies.filter(m => m != movie);
     modal.result.then((result) => {
-      for (let prop in result) {
-        movie[prop] = result[prop];
+      if (isEditMode == true) {
+        for (let prop in result) {
+          movie[prop] = result[prop];
+        }
+      } else {
+        this.movies.push(result);
       }
-    });
+      
+    }, (close)=>{});    
+  }
+
+  OpenDeleteModal(movie){
+    var modal = this.modalService.open(DeleteModalComponent);
+    modal.componentInstance.movie =  movie;
+    modal.result.then((deletePermission) => {
+      if(deletePermission){
+        this.movies.splice(this.movies.indexOf(movie), 1);
+      }
+
+    }, (close)=>{});
   }
 }

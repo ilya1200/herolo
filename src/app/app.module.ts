@@ -9,23 +9,28 @@ import { CinemaComponent } from './cinema/cinema.component';
 import { HttpClientModule } from '@angular/common/http';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { EditModalComponent } from './cinema/edit-modal/edit-modal.component';
-import {  FormsModule } from '@angular/forms';
-
+import {  FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { DeleteModalComponent } from './cinema/delete-modal/delete-modal.component';
+import { EngPipe } from './cinema/engPipe';
 @NgModule({
   declarations: [
     AppComponent,
     CinemaComponent,
-    EditModalComponent
+    EditModalComponent,
+    DeleteModalComponent,
+    EngPipe
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     NgbModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   entryComponents: [
-    EditModalComponent
+    EditModalComponent,
+    DeleteModalComponent
   ],
   providers: [CinemaService],
   bootstrap: [AppComponent]

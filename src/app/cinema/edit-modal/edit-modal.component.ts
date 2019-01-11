@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { infMovie } from '../../infMovie';
 
 @Component({
@@ -10,30 +10,36 @@ import { infMovie } from '../../infMovie';
 })
 export class EditModalComponent implements OnInit {
   private movie: infMovie;
-  movieForm: FormGroup;
+  private movies: infMovie[];
+  movieForm: any;
+  isTitleExists: boolean;
   
-  constructor(private modalInstance: NgbActiveModal) { 
-     
+  constructor(private modalInstance: NgbActiveModal, private builder: FormBuilder) { 
+
   }
 
   ngOnInit() {
-    this.movieForm = new FormGroup({
-      title: new FormControl(this.movie.Title, [
-        Validators.required,
-        Validators.minLength(4)
-      ]),
-
-    });
+   
   }
 
   saveMovie() {
-    this.modalInstance.close(this.movie);
+    var frm = document.forms["myForm"];
+    if (this.validateTitle() == false && frm.checkValidity()) {
+      this.modalInstance.close(this.movie);
+    }
   }
 
   closeModal() {
     this.modalInstance.dismiss();
   }
 
-
+  validateTitle(){
+    if (this.movies.filter(m => m.Title == this.movie.Title).length > 0) {
+      this.isTitleExists = true;
+    } else {
+      this.isTitleExists = false;
+    }
+    return this.isTitleExists;
+  }
 
 }

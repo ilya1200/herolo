@@ -1,5 +1,5 @@
 export interface infMovie{
-    Id:number;
+    Id:string;
     Title:string;
     Director:string;
     Genre:string;

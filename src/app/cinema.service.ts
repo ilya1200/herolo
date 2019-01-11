@@ -1,52 +1,32 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { infMovie } from './infMovie';
+import { Observable } from 'rxjs';
+
 
 @Injectable({
   providedIn: 'root'
 })
-export class CinemaService {
+export class CinemaService { 
 
   constructor(private http:HttpClient) { }
 
-  getMovies() : infMovie[]{
-    const from:number=0;//0 - test
-
-    if(from===0){//Hard code
-      return [
-        {
-          "Id": 1,
-          "Title":"Dog Day Afternoon",
-          "Year":"1975",
-          "Runtime":"125 min",
-          "Genre":"Biography, Crime, Drama",
-          "Director":"Sindey Lumet"
-        },
-        {
-          "Id": 2,
-          "Title": "Guardians of the Galaxy Vol. 2",
-          "Year":"2017",
-          "Runtime":"136 min",
-          "Genre":"Action, Adventure, Comedy, Sci-Fi",
-          "Director": "James Gunn"
-        },
-  
-        {
-          "Id": 3,
-          "Title": "Avengers: Endgame",
-          "Year":"2019",
-          "Runtime":"120 min",
-          "Genre":"Action, Adventure, Fantasy ",
-          "Director": "Anthony Russo, Joe Russo"
+  getMovies(callback){
+    const idArr = ['tt0429434', 'tt2287041', 'tt2693892','tt2568868','tt2537956','tt2361849']; 
+    var allMovies: infMovie[] = [];
+    idArr.forEach(movieId => {
+      this.getMovie(movieId).subscribe(movie => {
+        movie.Id = movieId;
+        allMovies.push(movie);
+        if (allMovies.length === idArr.length) {
+          callback(allMovies);
         }
-        
-      ];
-    }
-    // else{//From server
-    //   const url:string="http://www.omdbapi.com/";
-    //   return this.http.get(url);
+      });
+    });
+  }
 
-    // }//Else
-
+  getMovie(id: string):Observable<infMovie> {
+    const url:string="http://www.omdbapi.com/?apikey=f794628b&i=" + id;
+    return this.http.get<infMovie>(url);
   }
 }
