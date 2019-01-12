@@ -1,7 +1,7 @@
 <div class="container">
   <div class="card-deck d-flex flex-wrap">
-      <button type="button" class="btn btn-outline-dark btn-lg btn-block" (click)="OpenEditModal({}, false)">Add Movie</button>
-    <div class="card text-center " *ngFor="let movie of movies">
+    <button type="button" class="btn btn-outline-dark btn-lg btn-block" (click)="OpenEditModal({}, false)">Add Movie</button>
+    <div class="card text-center shadow rounded my-3" *ngFor="let movie of movies">
       <div class="card-body d-flex flex-column">
         <header>
           <h5 class="card-title"> {{movie.Title | engPipe | titlecase }}</h5>

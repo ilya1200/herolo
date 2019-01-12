@@ -26,7 +26,7 @@ export class CinemaService {
   }
 
   getMovie(id: string):Observable<infMovie> {
-    const url:string="http://www.omdbapi.com/?apikey=f794628b&i=" + id;
+    const url:string="https://www.omdbapi.com/?apikey=f794628b&i=" + id;
     return this.http.get<infMovie>(url);
   }
 }
